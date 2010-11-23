@@ -1,15 +1,11 @@
 RoRZad7::Application.routes.draw do
   devise_for :users
 
-  resources :profiles do
-    member do
-      post :invite
-    end
-  end
   resources :groups do
     member do
       post :invite
     end
+    post :accept
   end
 
   root :to => "home#index"

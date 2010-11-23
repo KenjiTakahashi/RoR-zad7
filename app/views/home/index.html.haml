@@ -1,8 +1,36 @@
 %div#left
-  - for group in @groups
-    group.name
+  Groups available:
+  %ul
+    - for group in @groups
+      %li= link_to group.name, group_path(group)
 %div#right
   - if user_signed_in?
+    - if not @invitations.empty?
+      %div
+        You've got some invites:
+        %ul
+        - for invite in current_user.invitations
+          %li
+            = link_to invite.group.name, group_path(invite.group)
+            = link_to "Accept", group_accept_path(invite.group, :accept => true, :inv => invite), :method => :post
+            = link_to "Reject", group_accept_path(invite.group, :accept => false, :inv => invite), :method => :post
+    - if not @owned_groups.empty?
+      %div
+        You own:
+        %ul
+          - for owned in @owned_groups
+            %li= link_to owned.name, group_path(owned)
+    - if not @member_groups.empty?
+      %div
+        You are a member here:
+        %ul
+          - for member in @member_groups
+            %li= link_to member.name, group_path(member)
+    %p
+      = link_to "Create new group", new_group_path
+    %p
+      Tired?
+      = link_to "Sign out", destroy_user_session_path
   - else
     %p
       Wanna create?

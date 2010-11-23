@@ -1,0 +1,24 @@
+%h1
+  = @group.name
+%p
+  %h2
+    Description:
+  %br
+  = @group.desc
+  %h3
+    Members:
+  - for member in @group.users
+    = member.email
+    %br
+  %h4
+    Admins:
+  - for admin in @admins
+    = admin.email
+    %br
+  - if @admins.include?(current_user)
+    %h5
+      Invite:
+    - form_for @invitation, :url => invite_group_path(@group) do |f|
+      = f.select(:user_id, options_for_select(@uninvited.map { |u| [u.email, u.id] }))
+      = f.submit "Invite", :disabled => (@uninvited.length == 0)
+= link_to "Come back", root_path
