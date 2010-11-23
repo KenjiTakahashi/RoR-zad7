@@ -1,0 +1,12 @@
+%div#left
+  - for group in @groups
+    group.name
+%div#right
+  - if user_signed_in?
+  - else
+    %p
+      Wanna create?
+      = link_to "Sign in!", new_user_session_path
+    %p
+      No account?
+      = link_to "Sign up!", new_user_registration_path

@@ -1,4 +1,18 @@
 RoRZad7::Application.routes.draw do
+  devise_for :users
+
+  resources :profiles do
+    member do
+      post :invite
+    end
+  end
+  resources :groups do
+    member do
+      post :invite
+    end
+  end
+
+  root :to => "home#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
